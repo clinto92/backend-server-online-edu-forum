@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 
-import PostMessage from "../models/postMessage.js";
+import PostMessage from "../models/StudentModels.js";
 
 const router = express.Router();
 
@@ -68,5 +68,6 @@ export const likePost = async (req, res) => {
   });
   res.status(200).json(updatedPost);
 };
+
 
 export default router;

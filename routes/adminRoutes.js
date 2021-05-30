@@ -8,6 +8,7 @@ import {
   createPost,
   getPosts,
   getTeacherInfo,
+  updateAdminControls,
 } from "../controllers/adminControl.js";
 
 const corsOptions = {
@@ -16,11 +17,13 @@ const corsOptions = {
   "preflightContinue": false,
   "optionsSuccessStatus": 204,
 }
+// "Access-Control-Allow-Credentials": true,
 // import auth from "../middleware/auth.js";
 // admin
 router.post("/admin-signin", cors(corsOptions), signin);
 router.get("/admin-info", cors(corsOptions), getAdminInfo);
-router.patch("/update-admin/:id", cors(corsOptions));
+router.patch("/update-admin/:id", cors(corsOptions), updateAdminControls);
+
 // teacher
 router.post("/teacher-signup", cors(corsOptions), signupTeacher);
 router.get("/teachers-info", cors(corsOptions), getTeacherInfo);

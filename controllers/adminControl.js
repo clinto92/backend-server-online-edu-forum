@@ -2,12 +2,17 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 import AdminModel from "../models/admin.js";
-import PostMessage from "../models/postMessage.js";
+import StudentModels from "../models/StudentModels.js";
 import TeacherModel from "../models/teacherModel.js";
 
 const secret = "test";
 
-export const signin = async (req, res) => {
+import express from "express";
+import mongoose from "mongoose";
+
+const router = express.Router();
+
+export const signin = async (req, res, next) => {
   const { username, password } = req.body;
 
   try {
@@ -31,16 +36,44 @@ export const signin = async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: "Something went wrong" });
   }
+  next()
 };
 
-export const signupTeacher = async (req, res) => {
+export const signupTeacher = async (req, res, next) => {
   const {
-    email,
-    password,
-    username,
-    teachername,
-    contact,
+    firstName,
+    lastName,
+    surname,
+    userName,
+    
+    dateOfJoining,
+    accountName,
+    accountNumber,
+    IFSC,
+    parentName,
+    spouse,
+    nativeLanguage,
     uniqueEmployeeID,
+    dob,
+    textarea,
+    email,
+    phoneNumber,
+    alternatePhone,
+    address,
+    city,
+    pinCode,
+    state,
+    country,
+    onlineID,
+    classes,
+    module,
+    lang,
+    subject,
+    experience,
+    preOrganization,
+    costHr,
+    lessonCost,
+    password,
   } = req.body;
 
   try {
@@ -52,12 +85,39 @@ export const signupTeacher = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const result = await TeacherModel.create({
-      email,
       password: hashedPassword,
-      teachername,
-      contact,
+      firstName,
+      lastName,
+      surname,
+      userName,
+      password,
+      dateOfJoining,
+      accountName,
+      accountNumber,
+      IFSC,
+      parentName,
+      spouse,
+      nativeLanguage,
       uniqueEmployeeID,
-      username,
+      dob,
+      textarea,
+      email,
+      phoneNumber,
+      alternatePhone,
+      address,
+      city,
+      pinCode,
+      state,
+      country,
+      onlineID,
+      classes,
+      module,
+      lang,
+      subject,
+      experience,
+      preOrganization,
+      costHr,
+      lessonCost,
     });
     res.set("Access-Control-Allow-Origin", "*");
     res.status(201).json({ result });
@@ -66,6 +126,7 @@ export const signupTeacher = async (req, res) => {
 
     console.log(error);
   }
+  next()
 };
 
 // below is only fired for admin user credential creations
@@ -104,20 +165,21 @@ export const signupTeacher = async (req, res) => {
 //   }
 // };
 
-export const getAdminInfo = async (req, res) => {
+export const getAdminInfo = async (req, res,next) => {
   try {
-    const postMessages = await AdminModel.find();
+    const dataCore = await AdminModel.find();
 
-    res.status(200).json(postMessages);
+    res.status(200).json(dataCore);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
+  next()
 };
 
-export const createPost = async (req, res) => {
+export const createPost = async (req, res, next) => {
   const post = req.body;
   console.log(post);
-  const studentsData = new PostMessage({
+  const studentsData = new StudentModels({
     ...post,
     createdAt: new Date().toISOString(),
   });
@@ -129,24 +191,67 @@ export const createPost = async (req, res) => {
   } catch (error) {
     res.status(409).json({ message: error.message });
   }
+  next()
 };
 
-export const getPosts = async (req, res) => {
+export const getPosts = async (req, res, next) => {
   try {
-    const postMessages = await PostMessage.find();
+    const dataCore = await StudentModels.find();
 
-    res.status(200).json(postMessages);
+    res.status(200).json(dataCore);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
+  next()
 };
 
-export const getTeacherInfo = async (req, res) => {
+export const getTeacherInfo = async (req, res,next) => {
   try {
-    const postMessages = await TeacherModel.find();
+    const dataCore = await TeacherModel.find();
 
-    res.status(200).json(postMessages);
+    res.status(200).json(dataCore);
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
+  next()
 };
+
+export const updateAdminControls = async (req, res, next) => {
+  const { id } = req.params;
+  const {
+    name,
+    email,
+    organization,
+    GST,
+    contact,
+    uniqueEmployeeID,
+    username,
+    password,
+    pictureFile,
+  } = req.body;
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id))
+      return res.status(404).send(`No admin with id: ${id}`);
+    const updatedPost = {
+      name: "",
+      email: "",
+      organization: "",
+      GST: "",
+      contact: "",
+      uniqueEmployeeID: "",
+      username: "",
+      password: "",
+      pictureFile: "",
+      _id: id,
+    };
+    await AdminModel.findByIdAndUpdate(id, updatedPost, { new: true });
+    res.json(updatedPost);
+  } catch (error) {
+    res.send(error);
+    console.log(error);
+  }
+  next()
+};
+
+export default router;
