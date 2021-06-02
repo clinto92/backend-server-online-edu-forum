@@ -26,6 +26,8 @@ mongoose
   .connect(process.env.CONNECTION_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
   })
   .then(() =>
     app.listen(process.env.PORT, () =>

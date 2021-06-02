@@ -2,13 +2,18 @@ import cors from "cors";
 import express from "express";
 const router = express.Router();
 import {
-  signin,
-  signupTeacher,
-  getAdminInfo,
-  createPost,
-  getPosts,
-  getTeacherInfo,
-  updateAdminControls,
+ 
+  createPostControl,
+  deleteStudentControl,
+  deleteTeacherControl,
+  getAdminInfoControl,
+  getPostsControl,
+  getTeacherInfoControl,
+  signinControl,
+  signupTeacherControl,
+  updateAdminControl,
+  updateStudentControl,
+  updateTeacherControl,
 } from "../controllers/adminControl.js";
 
 const corsOptions = {
@@ -20,18 +25,18 @@ const corsOptions = {
 // "Access-Control-Allow-Credentials": true,
 // import auth from "../middleware/auth.js";
 // admin
-router.post("/admin-signin", cors(corsOptions), signin);
-router.get("/admin-info", cors(corsOptions), getAdminInfo);
-router.patch("/update-admin/:id", cors(corsOptions), updateAdminControls);
+router.post("/admin-signin", cors(corsOptions), signinControl);
+router.get("/admin-info", cors(corsOptions), getAdminInfoControl);
+router.patch("/update-admin/:id", cors(corsOptions), updateAdminControl);
 
 // teacher
-router.post("/teacher-signup", cors(corsOptions), signupTeacher);
-router.get("/teachers-info", cors(corsOptions), getTeacherInfo);
-router.patch("/update-teacher/:id", cors(corsOptions));
-router.delete("/delete-teacher/:id", cors(corsOptions));
+router.post("/teacher-signup", cors(corsOptions), signupTeacherControl);
+router.get("/teachers-info", cors(corsOptions), getTeacherInfoControl);
+router.patch("/update-teacher/:id", cors(corsOptions), updateTeacherControl);
+router.delete("/delete-teacher/:id", cors(corsOptions), deleteTeacherControl);
 // student
-router.post("/create-student", cors(corsOptions), createPost);
-router.get("/students-info", cors(corsOptions), getPosts);
-router.patch("/update-student/:id", cors(corsOptions));
-router.delete("/delete-student/:id", cors(corsOptions));
+router.post("/create-student", cors(corsOptions), createPostControl);
+router.get("/students-info", cors(corsOptions), getPostsControl);
+router.patch("/update-student/:id", cors(corsOptions), updateStudentControl);
+router.delete("/delete-student/:id", cors(corsOptions), deleteStudentControl);
 export default router;
