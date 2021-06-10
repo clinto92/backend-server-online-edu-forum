@@ -38,8 +38,8 @@ const userSchema = mongoose.Schema({
   }
 });
 
-export default mongoose.models.TeacherModel || mongoose.model("TeacherModel", userSchema);
-
+// export default mongoose.models.TeacherModel || mongoose.model("TeacherModel", userSchema);
+export default mongoose.model("TeacherModel", userSchema);
 //   username: { type: String, required:  true },
 // email: { type: String, required: true },
 // password: { type: String, required: true },
