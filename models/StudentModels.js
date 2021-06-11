@@ -27,7 +27,7 @@ const studentSchema = mongoose.Schema({
     textarea: String,
     assigned: {
       listening: {
-        Lopted: false,
+        Lopted: Boolean,
         LdateOfAssign: String,
         LmoduleEndDate: String,
         LmoduleCost: String,
@@ -38,7 +38,7 @@ const studentSchema = mongoose.Schema({
         LteacherID: String,
       },
         reading: {
-          Ropted: false,
+          Ropted: Boolean,
           RdateOfAssign: String,
           RmoduleEndDate: String,
           RmoduleCost: String,
@@ -50,7 +50,7 @@ const studentSchema = mongoose.Schema({
         },
         
           writing: {
-            Wopted: false,
+            Wopted: Boolean,
             WdateOfAssign: String,
             WmoduleEndDate: String,
             WmoduleCost: String,
@@ -62,7 +62,7 @@ const studentSchema = mongoose.Schema({
           },
           
             speaking: {
-              Sopted: false,
+              Sopted: Boolean,
               SdateOfAssign: String,
               SmoduleEndDate: String,
               SmoduleCost: String,
@@ -76,12 +76,12 @@ const studentSchema = mongoose.Schema({
     },
     
     admissionDate: String,
-    courseCompletion: false,
-    IMPS: false,
-    GooglePay: false,
-    NEFT: false,
-    PhonePe: false,
-    CASH: false,
+    courseCompletion: Boolean,
+    IMPS: Boolean,
+    GooglePay: Boolean,
+    NEFT: Boolean,
+    PhonePe: Boolean,
+    CASH: Boolean,
 });
 
 var StudentModels = mongoose.model("StudentModels", studentSchema);

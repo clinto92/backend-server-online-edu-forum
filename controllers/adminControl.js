@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 import AdminModel from "../models/admin.js";
 import StudentModels from "../models/StudentModels.js";
-import TeacherModel from "../models/TeacherModel.js";
+import TeacherModel from "../models/teacherModel.js";
 
 const secret = "test";
 import express from "express";
